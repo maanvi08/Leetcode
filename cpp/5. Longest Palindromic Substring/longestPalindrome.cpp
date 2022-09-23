@@ -16,7 +16,7 @@
 *Input: s = "cbbd"
 *Output: "bb"
 **********************************************************************************************************/
-
+//Brute Force Approach
 class Solution {
 public:
    
@@ -52,5 +52,54 @@ public:
         }
         
         return temp1;
+    }
+};
+//*******************************************************************************************************
+class Solution {
+public:
+    string longestPalindrome(string s) {
+        
+        int n=s.size();
+        int temp[n][n];
+        string res="";
+        int l=0;
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                temp[i][j]=0;
+            }
+        }
+        
+        for(int d=0;d<n;d++){
+            for(int i=0,j=i+d;j<n;j++,i++){
+                
+                if(i==j)
+                    temp[i][j]=1;
+                
+                else if(d==1){
+                    if(s[i]==s[j]) 
+                        temp[i][j]=2;
+                    else  
+                        temp[i][j]=0;
+                }
+                
+                else{
+                    
+                    if(s[i]==s[j] && temp[i+1][j-1]){
+                        temp[i][j]=temp[i+1][j-1]+2;
+                    }
+                }
+                
+                if(temp[i][j]){
+                    if(j-i+1>l){
+                        l=j-i+1;
+                        res=s.substr(i,l);
+                    }
+                }
+            }
+            
+        }
+        
+        return res;
     }
 };
